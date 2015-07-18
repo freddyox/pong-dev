@@ -12,6 +12,8 @@
 #include "../include/Ball.hh"
 #include "../include/Starmap.hh"
 #include "../include/TableMap.hh"
+#include "../include/Score.hh"
+#include "../include/ScoreWindow.hh"
 
 #include <iostream>
 
@@ -33,14 +35,15 @@ int main()
   bool optionsBool = false;
   bool computerAIBool = false;
   bool playertwoBool = true; //default behavior
-  
+
+  // Initialize Score
+  Score score( window.getSize().x, window.getSize().y );
+  ScoreWindow scorewindow( window.getSize().x, window.getSize().y );
   // Initialize the TableMap
   TableMap tablemap( window.getSize().x, window.getSize().y );
 
   // Initialize the Paddles
-  Paddle Left("Player1");
-  Paddle Right("Player2");
-  //Left.initialize();
+  Paddle Paddles("Player 1","Player 2");
 
   // Initialize the Ball
   Ball ball;
@@ -115,16 +118,19 @@ int main()
       window.clear(PongTableColor);
       window.draw(tablemap);
 
+      // Score
+      window.draw(score);
+
       // Paddles
       if( playertwoBool ) {
-	window.draw(Left);
-	Left.movePaddle();
+	window.draw(Paddles);
+	Paddles.movePaddle();
       }
       if( computerAIBool ){
       }
       // Ball
       window.draw(ball);
-      ball.update(&Left);
+      ball.update(&Paddles);
     }
     // Clean up / Updates
     window.display();

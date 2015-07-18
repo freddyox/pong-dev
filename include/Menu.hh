@@ -11,22 +11,22 @@
 class Menu: public sf::Drawable
 {
 private:
-float mwidth;
-float mheight;
-std::string mopt1, mopt2, mopt3;
-float mcharsize;
+  float mwidth;
+  float mheight;
+  std::string mopt1, mopt2, mopt3;
+  float mcharsize;
 
-int selectedItemIndex;
-sf::Font font;
-sf::Text menu[MAX_NUMBER];
+  int selectedItemIndex;
+  sf::Font font;
+  sf::Text menu[MAX_NUMBER];
 
 public:
-Menu(float, float);
-~Menu() {};
-void draw(sf::RenderTarget&, sf::RenderStates) const;
-void MoveUp();
-void MoveDown();
-int getPressedItem() { return selectedItemIndex; }
+  Menu(float, float);
+  ~Menu() {};
+  void draw(sf::RenderTarget&, sf::RenderStates) const;
+  void MoveUp();
+  void MoveDown();
+  int getPressedItem() { return selectedItemIndex; }
 
 };
 #endif

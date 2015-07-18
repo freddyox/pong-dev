@@ -3,7 +3,7 @@
 echo "Compiling..."
 echo " "
 cd src/
-g++ -c main.cpp Starmap.cpp Menu.cpp Options.cpp Paddle.cpp Ball.cpp TableMap.cpp -I/Documents/SFML/SFML_SRC/include 
+g++ -c main.cpp Starmap.cpp Menu.cpp Options.cpp Paddle.cpp Ball.cpp TableMap.cpp Score.cpp ScoreWindow.cpp -I/Documents/SFML/SFML_SRC/include 
 echo "Linking..."
 echo " "
 
@@ -35,11 +35,19 @@ if [ -e TableMap.cpp~ ];
 then 
     rm TableMap.cpp~
 fi
+if [ -e Score.cpp~ ];
+then 
+    rm Score.cpp~
+fi
+if [ -e ScoreWindow.cpp~ ];
+then 
+    rm ScoreWindow.cpp~
+fi
 
 mv *.o ../linkers
 cd ../linkers
 
-g++ main.o Starmap.o Menu.o Options.o Paddle.o Ball.o TableMap.o -o pong -L/Documents/SFML/SFML_SRC/lib -lsfml-graphics -lsfml-window -lsfml-system
+g++ main.o Starmap.o Menu.o Options.o Paddle.o Ball.o TableMap.o Score.o ScoreWindow.o -o pong -L/Documents/SFML/SFML_SRC/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 mv pong ../
 cd ../
@@ -74,7 +82,14 @@ if [ -e TableMap.hh~ ] ;
 then
     rm TableMap.hh~
 fi
-
+if [ -e Score.hh~ ] ;
+then
+    rm Score.hh~
+fi
+if [ -e ScoreWindow.hh~ ] ;
+then
+    rm ScoreWindow.hh~
+fi
 cd ..
 echo "Executing..."
 echo " "

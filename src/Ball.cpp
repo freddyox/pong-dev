@@ -32,7 +32,20 @@ Ball::Ball(){
   // Initialize position
   ball.setPosition( Posx, Posy );
   ballVector.push_back( ball );
+
+  LeftScoreBool = false;
+  RightScoreBool = false;
+  RightScore = 0;
+
+  // Initialize ball sound
+
 }
+
+// void Ball::loadsound() {
+//   if( !ballsoundbuffer.loadFromFile("sounds/ballsound.wav") )
+//     std::cerr << "Error loading sound" << std::endl;
+//   ballsound.setBuffer( ballsoundbuffer );
+// }
 
 void Ball::draw(sf::RenderTarget& target, sf::RenderStates) const {
 std::vector<sf::CircleShape>::const_iterator it;
@@ -45,12 +58,16 @@ void Ball::update(Paddle *ptr) {
   // Center of Paddle
   float width = ptr->width();
   float height = ptr->height();
-
-  sf::Vector2f PaddleCenter = ptr->position(); 
   sf::Vector2f PaddleSize( width, height);
-  // Make Paddle Rectangle:
-  sf::FloatRect PaddleRect(PaddleCenter, PaddleSize);
 
+  // LEFT:
+  sf::Vector2f PaddleCenterL = ptr->positionL(); 
+  // Make Paddle Rectangle:
+  sf::FloatRect PaddleRectL(PaddleCenterL, PaddleSize);
+  // RIGHT:
+  sf::Vector2f PaddleCenterR = ptr->positionR(); 
+  // Make Paddle Rectangle:
+  sf::FloatRect PaddleRectR(PaddleCenterR, PaddleSize);
   std::vector<sf::CircleShape>::iterator it;
   for( it=ballVector.begin(); it!=ballVector.end(); ++it) {
     //Center Coordinates of Ball
@@ -63,29 +80,54 @@ void Ball::update(Paddle *ptr) {
     sf::FloatRect BallRect(BallCenter, BallSize);
 
     // Distance between the two:
-    sf::Vector2f D = BallCenter - PaddleCenter;
-    float distance = sqrt( pow(D.x,2) + pow(D.y,2) );
+    sf::Vector2f DLeft = BallCenter - PaddleCenterL;
+    float distanceLeft = sqrt( pow(DLeft.x,2) + pow(DLeft.y,2) );
+    sf::Vector2f DRight = BallCenter - PaddleCenterR;
+    float distanceRight = sqrt( pow(DRight.x,2) + pow(DRight.y,2) );
 
     // Collisions between Ball & Walls:
     if( (BallCenter.y - radius) <= 5.0 ) // top wall
       vy = -vy;
     if( (BallCenter.y + radius) >= displayy - 5.0 ) // bottom wall
       vy = -vy;	
-    if ( (BallCenter.x + radius) >=  displayx - 5.0 ) // only for development ---delete
-	vx = -vx;
+    // if ( (BallCenter.x + radius) >=  displayx - 5.0 ) // only for development ---delete
+    // 	vx = -vx;
     //if( (BallCenter.x -radius) <= 5.0 ) // only for development ---delete
 	//vx = -vx; 
 
     
     // Collisions between Ball & Paddles
-    if( distance < 5.0*radius ) {
-      if( BallRect.intersects( PaddleRect ) && vx < 0.0 ) {
+    if( distanceLeft < 5.0*radius ) {
+      if( BallRect.intersects( PaddleRectL ) && vx < 0.0 ) {
       	vx = -vx;
       	bounceNumber++;
       }
     }
-
-      
+    if( distanceRight < 5.0*radius ) {
+      if( BallRect.intersects( PaddleRectR ) && vx > 0.0 ) {
+      	vx = -vx;
+      	bounceNumber++;
+      }
+    }
     it->move(vx,vy);
+    if( (BallCenter.x - radius/2.0) < 0 ) {
+      RightScoreBool = true; //Right Paddle Scored
+    }
+    if( (BallCenter.x - radius/2.0) > displayx ) {
+      LeftScoreBool = true; //Left Paddle Scored
+    }
   }
 }
+
+// void Ball::ballupdate() {
+//   std::vector<sf::CircleShape>::iterator it;
+//   for( it=ballVector.begin(); it!=ballVector.end(); ++it) {
+//     sf::Vector2f BallCenter = it->getPosition();
+//     if( BallCenter.x < 0 || BallCenter.x > displayx ) {
+//       ballVector.erase(*it);
+//     }
+//   } 
+//   ball.setPosition( Posx, Posy );
+//   ballVector.push_back( ball );
+  
+// }
