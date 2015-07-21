@@ -36,16 +36,7 @@ Ball::Ball(){
   LeftScoreBool = false;
   RightScoreBool = false;
   RightScore = 0;
-
-  // Initialize ball sound
-
 }
-
-// void Ball::loadsound() {
-//   if( !ballsoundbuffer.loadFromFile("sounds/ballsound.wav") )
-//     std::cerr << "Error loading sound" << std::endl;
-//   ballsound.setBuffer( ballsoundbuffer );
-// }
 
 void Ball::draw(sf::RenderTarget& target, sf::RenderStates) const {
 std::vector<sf::CircleShape>::const_iterator it;
@@ -110,6 +101,7 @@ void Ball::update(Paddle *ptr) {
       }
     }
     it->move(vx,vy);
+
     if( (BallCenter.x - radius/2.0) < 0 ) {
       RightScoreBool = true; //Right Paddle Scored
     }
@@ -120,14 +112,18 @@ void Ball::update(Paddle *ptr) {
 }
 
 // void Ball::ballupdate() {
+//   unsigned int temp = 0;
 //   std::vector<sf::CircleShape>::iterator it;
 //   for( it=ballVector.begin(); it!=ballVector.end(); ++it) {
 //     sf::Vector2f BallCenter = it->getPosition();
 //     if( BallCenter.x < 0 || BallCenter.x > displayx ) {
-//       ballVector.erase(*it);
+//       ballVector.erase(it);
+//       temp++;
 //     }
 //   } 
+//   if( temp>0) {
 //   ball.setPosition( Posx, Posy );
 //   ballVector.push_back( ball );
+//   }
   
 // }

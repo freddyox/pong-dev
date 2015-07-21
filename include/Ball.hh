@@ -32,8 +32,8 @@ public:
   float getRadius() { return mradius;}
   void update(Paddle*);
   bool newScore();
-  bool didLeftPaddleScore() { return &LeftScoreBool; }
-  bool didRightPaddleScore() { return &RightScoreBool; }
+  bool didLeftPaddleScore() { return LeftScoreBool; }
+  bool didRightPaddleScore() { return RightScoreBool; }
   void ballupdate();
   void loadsound();
 

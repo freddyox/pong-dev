@@ -20,9 +20,7 @@
 
 const float gDisplayx = 800;
 const float gDisplayy = 500;
-int main()
-{
-  sf::Color PongTableColor = sf::Color(4,27,90);
+int main() {
   //GAME SETUP
   sf::RenderWindow window(sf::VideoMode(gDisplayx,gDisplayy), "PONG - Obrecht");
   window.setFramerateLimit(60);
@@ -39,11 +37,16 @@ int main()
   // Initialize Score
   Score score( window.getSize().x, window.getSize().y );
   ScoreWindow scorewindow( window.getSize().x, window.getSize().y );
+
   // Initialize the TableMap
+  sf::Color PongTableColor = sf::Color(4,27,90);
   TableMap tablemap( window.getSize().x, window.getSize().y );
 
   // Initialize the Paddles
   Paddle Paddles("Player 1","Player 2");
+  
+  // AI Paddle
+  Paddle Paddle("Player 1");
 
   // Initialize the Ball
   Ball ball;
@@ -126,11 +129,20 @@ int main()
 	window.draw(Paddles);
 	Paddles.movePaddle();
       }
+
+      // Computer AI
       if( computerAIBool ){
       }
+
       // Ball
       window.draw(ball);
       ball.update(&Paddles);
+
+      // Score Keeper
+      if(ball.didLeftPaddleScore() || ball.didRightPaddleScore() ) {
+	window.clear();
+	window.draw(scorewindow);
+      }
     }
     // Clean up / Updates
     window.display();
