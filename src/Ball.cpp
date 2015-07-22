@@ -78,21 +78,27 @@ void Ball::update(Paddle *ptr) {
     float distanceRight = sqrt( pow(DRight.x,2) + pow(DRight.y,2) );
 
     // Collisions between Ball & Walls:
-    if( (BallCenter.y - radius) <= 5.0 ) // top wall
+    if( (BallCenter.y - radius) <= 5.0 ) {// top wall
       vy = -vy;
-    if( (BallCenter.y + radius) >= displayy - 5.0 ) // bottom wall
+      ballsound.play();
+    }
+    if( (BallCenter.y + radius) >= displayy - 5.0 ) {// bottom wall
       vy = -vy;	
+      ballsound.play();
+    }
     
     // Collisions between Ball & Paddles
     if( distanceLeft < 5.0*radius ) {
       if( BallRect.intersects( PaddleRectL ) && vx < 0.0 ) {
       	vx = -vx;
+	ballsound.play();
       	bounceNumber++;
       }
     }
     if( distanceRight < 5.0*radius ) {
       if( BallRect.intersects( PaddleRectR ) && vx > 0.0 ) {
       	vx = -vx;
+	ballsound.play();
       	bounceNumber++;
       }
     }
@@ -122,4 +128,11 @@ void Ball::ballupdate() {
       (*it).setPosition( Posx, Posy );
     }
   }  
+}
+
+void Ball::loadsound() { 
+  if( !ballsoundbuff.loadFromFile("sounds/ballsound1.wav")) {
+    std::cerr << "ERROR: Ball sound did not load properly" << std::endl;
+  }
+  ballsound.setBuffer(ballsoundbuff);
 }

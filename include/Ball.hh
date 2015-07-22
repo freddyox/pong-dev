@@ -24,26 +24,28 @@ private:
   bool LeftScoreBool, RightScoreBool;
   int RightScore, LeftScore;
 
+  sf::Sound ballsound;
+  sf::SoundBuffer ballsoundbuff;
 
 public:
   Ball();
   ~Ball() {};
   void draw(sf::RenderTarget&, sf::RenderStates) const;
   float getRadius() { return mradius;}
-  void update(Paddle*);
+
   int getRightScore() { return RightScore; }
   int getLeftScore() { return LeftScore; }
+  void setRightScore(int temp) {RightScore = temp;}
+  void setLeftScore(int temp) {LeftScore = temp;}
 
   bool didLeftPaddleScore() { return LeftScoreBool; }
   bool didRightPaddleScore() { return RightScoreBool; }
-
   bool setLeftBool(bool temp) { LeftScoreBool = temp; }
   bool setRightBool(bool temp) { RightScoreBool = temp; }
+
+  void update(Paddle*);
   void ballupdate();
   void loadsound();
-
-  // sf::Sound ballsound;
-  // sf::SoundBuffer ballsoundbuffer;
 
 };
 

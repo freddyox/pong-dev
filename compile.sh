@@ -51,7 +51,7 @@ fi
 mv *.o ../linkers
 cd ../linkers
 
-g++ main.o Starmap.o Menu.o Options.o Paddle.o Ball.o TableMap.o Score.o ScoreWindow.o Gameover.o -o pong -L/Documents/SFML/SFML_SRC/lib -lsfml-graphics -lsfml-window -lsfml-system
+g++ main.o Starmap.o Menu.o Options.o Paddle.o Ball.o TableMap.o Score.o ScoreWindow.o Gameover.o -o pong -L/Documents/SFML/SFML_SRC/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 mv pong ../
 cd ../

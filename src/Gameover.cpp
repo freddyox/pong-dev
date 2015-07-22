@@ -33,3 +33,14 @@ void Gameover::setWinner(std::string winner) {
   sf::FloatRect textRect = game[1].getLocalBounds();
   game[1].setPosition( sf::Vector2f( (mwidth-textRect.width )/2.0, (mheight-textRect.height)/(2 + 1)*2 ) );
 }
+
+void Gameover::loadsound() {
+  if(!gameoverbuffer.loadFromFile( "sounds/gameovercrowd.wav" ) ){
+    std::cerr << "ERROR: Gameover sound did not load properly" << std::endl;
+  }
+  gameoversound.setBuffer(gameoverbuffer);
+}
+
+void Gameover::playsound() {
+  gameoversound.play();
+}

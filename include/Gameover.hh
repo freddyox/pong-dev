@@ -3,6 +3,7 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <string>
 
@@ -15,11 +16,15 @@ private:
 
   sf::Font font;
   sf::Text game[2];
+  sf::Sound gameoversound;
+  sf::SoundBuffer gameoverbuffer;
 
 public:
   Gameover(float,float);
   ~Gameover() {};
   void draw(sf::RenderTarget&, sf::RenderStates) const;
-void setWinner(std::string);
+  void setWinner(std::string);
+  void loadsound();
+  void playsound();
 };
 #endif

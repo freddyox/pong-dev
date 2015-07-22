@@ -1,6 +1,6 @@
 //    ************************************************************
-//    *                      Freddy Obrecht's Emulated Pong                    *
-//    *                                     June 2015                                        *
+//    *             Freddy Obrecht's Emulated Pong               *
+//    *                         June 2015                        *
 //    ************************************************************
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -53,10 +53,12 @@ int main() {
 
   // Initialize the Ball
   Ball ball;
+  ball.loadsound();
 
   //Initialize Gameover Screen
   int winningscore = 5;
   Gameover gameover( window.getSize().x, window.getSize().y );
+  gameover.loadsound();
   sf::Time elapsedGameOver;
   bool gameoverBool = false;
 
@@ -112,6 +114,16 @@ int main() {
 	      }
 	    }
 	}
+	if( gameoverBool ) {
+	  if( sf::Keyboard::isKeyPressed( sf::Keyboard::Space )) {
+	    menuBool = true;
+	    optionsBool = false;
+	    ball.setRightScore(0);
+	    ball.setLeftScore(0);
+	    ball.ballupdate();
+	    gameoverBool = false;
+	  }
+	}
     }
     
     //DRAWING - Layers of draw commands, i.e. first is layer one
@@ -155,7 +167,7 @@ int main() {
 	window.draw(scorewindow);
 	elapsed+=scoreClock.getElapsedTime();
 	
-	if( elapsed.asSeconds() >= 0.005 ) {
+	if( elapsed.asSeconds() >= 0.009 ) {
 	  ball.setLeftBool(false);
 	  ball.setRightBool(false);	  
 	  elapsed-=elapsed; 
@@ -171,7 +183,8 @@ int main() {
       if( ball.getRightScore() == winningscore ) {
 	gameoverBool = true;
 	ball.setLeftBool(false);
-	ball.setRightBool(false);	  
+	ball.setRightBool(false);
+	//gameover.playsound();
 	std::string winner = Paddles.getRightName() + " WINS!";
 	gameover.setWinner( winner );
 	window.clear();
@@ -183,6 +196,7 @@ int main() {
 	gameoverBool = true;
 	ball.setLeftBool(false);
 	ball.setRightBool(false);
+	//gameover.playsound();
 	std::string winner = Paddles.getLeftName() + " WINS!";
 	gameover.setWinner( winner );
 	window.clear();
