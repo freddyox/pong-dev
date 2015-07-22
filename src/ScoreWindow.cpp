@@ -1,4 +1,5 @@
 #include "../include/ScoreWindow.hh"
+#include <sstream>
 
 ScoreWindow::ScoreWindow(float width, float height) {
   if( !font.loadFromFile("fonts/arial.ttf") ) {
@@ -27,8 +28,19 @@ ScoreWindow::ScoreWindow(float width, float height) {
   score[1].setPosition( sf::Vector2f(width/2.0 + 2*textRect.width/2.0 + 4, height/2.0 - textRect.height/2.0) );
 }
 
-
 void ScoreWindow::draw(sf::RenderTarget &target, sf::RenderStates) const {
   for( int i=0; i<2; i++ )
     target.draw(score[i]);
+}
+
+void ScoreWindow::updateScore(int Left, int Right) {
+  std::ostringstream LeftTemp;
+  LeftTemp << Left;
+  mopt1 = LeftTemp.str();
+  score[0].setString(mopt1);
+
+  std::ostringstream RightTemp;
+  RightTemp << Right;
+  mopt2 =  RightTemp.str();
+  score[1].setString(mopt2);
 }

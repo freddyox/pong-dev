@@ -21,7 +21,7 @@ public:
   Score(float, float);
   ~Score() {};
   void draw(sf::RenderTarget&, sf::RenderStates) const;
-  void updateScore(); //might need a pointer
+  void updateScore(int,int);
   
 };
 #endif

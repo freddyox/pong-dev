@@ -21,8 +21,7 @@ public:
   ScoreWindow(float, float);
   ~ScoreWindow() {};
   void draw(sf::RenderTarget&, sf::RenderStates) const;
-  void updateScore(); //might need a pointer
-
+  void updateScore(int,int); //might need a pointer
   
 };
 #endif

@@ -1,4 +1,5 @@
 #include "../include/Score.hh"
+#include <sstream>
 
 Score::Score(float width, float height) {
   if( !font.loadFromFile("fonts/arial.ttf") ) {
@@ -29,4 +30,16 @@ Score::Score(float width, float height) {
 void Score::draw(sf::RenderTarget &target, sf::RenderStates) const {
   for( int i=0; i<2; i++ )
     target.draw(score[i]);
+}
+
+void Score::updateScore(int Left, int Right) {
+  std::ostringstream LeftTemp;
+  LeftTemp << Left;
+  mopt1 = LeftTemp.str();
+  score[0].setString(mopt1);
+
+  std::ostringstream RightTemp;
+  RightTemp << Right;
+  mopt2 =  RightTemp.str();
+  score[1].setString(mopt2);
 }

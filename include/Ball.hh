@@ -22,7 +22,7 @@ private:
   float deltaV;
   std::vector<sf::CircleShape> ballVector;
   bool LeftScoreBool, RightScoreBool;
-  int RightScore;
+  int RightScore, LeftScore;
 
 
 public:
@@ -31,9 +31,14 @@ public:
   void draw(sf::RenderTarget&, sf::RenderStates) const;
   float getRadius() { return mradius;}
   void update(Paddle*);
-  bool newScore();
+  int getRightScore() { return RightScore; }
+  int getLeftScore() { return LeftScore; }
+
   bool didLeftPaddleScore() { return LeftScoreBool; }
   bool didRightPaddleScore() { return RightScoreBool; }
+
+  bool setLeftBool(bool temp) { LeftScoreBool = temp; }
+  bool setRightBool(bool temp) { RightScoreBool = temp; }
   void ballupdate();
   void loadsound();
 

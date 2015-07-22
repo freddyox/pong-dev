@@ -36,6 +36,7 @@ Ball::Ball(){
   LeftScoreBool = false;
   RightScoreBool = false;
   RightScore = 0;
+  LeftScore = 0;
 }
 
 void Ball::draw(sf::RenderTarget& target, sf::RenderStates) const {
@@ -81,11 +82,6 @@ void Ball::update(Paddle *ptr) {
       vy = -vy;
     if( (BallCenter.y + radius) >= displayy - 5.0 ) // bottom wall
       vy = -vy;	
-    // if ( (BallCenter.x + radius) >=  displayx - 5.0 ) // only for development ---delete
-    // 	vx = -vx;
-    //if( (BallCenter.x -radius) <= 5.0 ) // only for development ---delete
-	//vx = -vx; 
-
     
     // Collisions between Ball & Paddles
     if( distanceLeft < 5.0*radius ) {
@@ -102,28 +98,28 @@ void Ball::update(Paddle *ptr) {
     }
     it->move(vx,vy);
 
+    // Handle Scoring
     if( (BallCenter.x - radius/2.0) < 0 ) {
-      RightScoreBool = true; //Right Paddle Scored
+      if( (BallCenter.x - radius/2.0) < 0 && (BallCenter.x - radius/2.0) >= -3 ) {
+	RightScore++;
+	RightScoreBool = true; //Right Paddle Scored
+      }
     }
     if( (BallCenter.x - radius/2.0) > displayx ) {
-      LeftScoreBool = true; //Left Paddle Scored
+      if( (BallCenter.x - radius/2.0) > displayx && (BallCenter.x - radius/2.0) <= displayx+3 ) {
+	LeftScore++;
+	LeftScoreBool = true; //Left Paddle Scored
+      }
     }
   }
 }
 
-// void Ball::ballupdate() {
-//   unsigned int temp = 0;
-//   std::vector<sf::CircleShape>::iterator it;
-//   for( it=ballVector.begin(); it!=ballVector.end(); ++it) {
-//     sf::Vector2f BallCenter = it->getPosition();
-//     if( BallCenter.x < 0 || BallCenter.x > displayx ) {
-//       ballVector.erase(it);
-//       temp++;
-//     }
-//   } 
-//   if( temp>0) {
-//   ball.setPosition( Posx, Posy );
-//   ballVector.push_back( ball );
-//   }
-  
-// }
+void Ball::ballupdate() {
+  std::vector<sf::CircleShape>::iterator it;
+  for( it=ballVector.begin(); it!=ballVector.end(); ++it) {
+    sf::Vector2f BallCenter = it->getPosition();
+    if( BallCenter.x < 0 || BallCenter.x > displayx ) {
+      (*it).setPosition( Posx, Posy );
+    }
+  }  
+}

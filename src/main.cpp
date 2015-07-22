@@ -1,6 +1,6 @@
 //    ************************************************************
-//    *               Freddy Obrecht's Emulated Pong             *
-//    *                        June 2015                         *
+//    *                      Freddy Obrecht's Emulated Pong                    *
+//    *                                     June 2015                                        *
 //    ************************************************************
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -37,15 +37,17 @@ int main() {
   // Initialize Score
   Score score( window.getSize().x, window.getSize().y );
   ScoreWindow scorewindow( window.getSize().x, window.getSize().y );
+  sf::Time elapsed;
+  bool scoreBool = true;
 
   // Initialize the TableMap
   sf::Color PongTableColor = sf::Color(4,27,90);
   TableMap tablemap( window.getSize().x, window.getSize().y );
-
-  // Initialize the Paddles
-  Paddle Paddles("Player 1","Player 2");
   
-  // AI Paddle
+  // Initialize the Paddles - Two Players
+  Paddle Paddles("Player 1","Player 2");
+
+  // AI Paddle - One Player
   Paddle Paddle("Player 1");
 
   // Initialize the Ball
@@ -140,11 +142,25 @@ int main() {
 
       // Score Keeper
       if(ball.didLeftPaddleScore() || ball.didRightPaddleScore() ) {
+	sf::Clock scoreClock; //reset clock each time
 	window.clear();
+	scorewindow.updateScore( ball.getLeftScore(), ball.getRightScore() );
 	window.draw(scorewindow);
+	elapsed+=scoreClock.getElapsedTime();
+	
+	if( elapsed.asSeconds() >= 0.005 ) {
+	  ball.setLeftBool(false);
+	  ball.setRightBool(false);	  
+	  elapsed-=elapsed; 
+	  ball.ballupdate();
+	}
+	scoreClock.restart();
       }
+
+      // Clean up / Updates
+      score.updateScore( ball.getLeftScore(), ball.getRightScore() );
     }
-    // Clean up / Updates
+    
     window.display();
     
   }
