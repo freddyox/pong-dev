@@ -3,7 +3,7 @@
 echo "Compiling..."
 echo " "
 cd src/
-g++ -c main.cpp Starmap.cpp Menu.cpp Options.cpp Paddle.cpp Ball.cpp TableMap.cpp Score.cpp ScoreWindow.cpp -I/Documents/SFML/SFML_SRC/include 
+g++ -c main.cpp Starmap.cpp Menu.cpp Options.cpp Paddle.cpp Ball.cpp TableMap.cpp Score.cpp ScoreWindow.cpp Gameover.cpp -I/Documents/SFML/SFML_SRC/include 
 echo "Linking..."
 echo " "
 
@@ -43,11 +43,15 @@ if [ -e ScoreWindow.cpp~ ];
 then 
     rm ScoreWindow.cpp~
 fi
+if [ -e Gameover.cpp~ ];
+then 
+    rm Gameover.cpp~
+fi
 
 mv *.o ../linkers
 cd ../linkers
 
-g++ main.o Starmap.o Menu.o Options.o Paddle.o Ball.o TableMap.o Score.o ScoreWindow.o -o pong -L/Documents/SFML/SFML_SRC/lib -lsfml-graphics -lsfml-window -lsfml-system
+g++ main.o Starmap.o Menu.o Options.o Paddle.o Ball.o TableMap.o Score.o ScoreWindow.o Gameover.o -o pong -L/Documents/SFML/SFML_SRC/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 mv pong ../
 cd ../
@@ -89,6 +93,10 @@ fi
 if [ -e ScoreWindow.hh~ ] ;
 then
     rm ScoreWindow.hh~
+fi
+if [ -e Gameover.hh~ ];
+then 
+    rm Gameover.hh~
 fi
 cd ..
 echo "Executing..."

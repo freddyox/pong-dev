@@ -14,6 +14,7 @@
 #include "../include/TableMap.hh"
 #include "../include/Score.hh"
 #include "../include/ScoreWindow.hh"
+#include "../include/Gameover.hh"
 
 #include <iostream>
 
@@ -52,6 +53,12 @@ int main() {
 
   // Initialize the Ball
   Ball ball;
+
+  //Initialize Gameover Screen
+  int winningscore = 5;
+  Gameover gameover( window.getSize().x, window.getSize().y );
+  sf::Time elapsedGameOver;
+  bool gameoverBool = false;
 
   while( window.isOpen() ) {
     sf::Event event;
@@ -159,6 +166,29 @@ int main() {
 
       // Clean up / Updates
       score.updateScore( ball.getLeftScore(), ball.getRightScore() );
+      
+      // Gameover
+      if( ball.getRightScore() == winningscore ) {
+	gameoverBool = true;
+	ball.setLeftBool(false);
+	ball.setRightBool(false);	  
+	std::string winner = Paddles.getRightName() + " WINS!";
+	gameover.setWinner( winner );
+	window.clear();
+	if(gameoverBool)
+	  window.draw(gameover);
+      }
+
+      if( ball.getLeftScore() == winningscore ) {
+	gameoverBool = true;
+	ball.setLeftBool(false);
+	ball.setRightBool(false);
+	std::string winner = Paddles.getLeftName() + " WINS!";
+	gameover.setWinner( winner );
+	window.clear();
+	if(gameoverBool)
+	  window.draw(gameover);	
+      }
     }
     
     window.display();
